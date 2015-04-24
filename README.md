@@ -1,6 +1,6 @@
 # Solvencia de Biblioteca
 
-Install
-cd /client
-sudo npm install
-grunt server
+## Install
+- cd /client
+- sudo npm install
+- grunt server
