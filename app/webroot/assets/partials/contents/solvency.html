@@ -1,0 +1,158 @@
+<section ng-controller="SolvencyController">
+
+	<div class="panel panel-default non-printable">
+		<div class="panel-heading">
+			<h3 class="panel-title">Generar Solvencia de Biblioteca</h3>
+		</div>
+		<div class="panel-body">
+
+			<form name="userForm" novalidate="" ng-submit="print()">
+
+				<div class="form-group">
+					<label class="control-label"><span class="glyphicon glyphicon-bookmark"></span> Tipo de Estudio <sup style="color: red;">*</sup></label>
+					<select name="study" data-ng-model="user.study" required ng-options="obj.study for obj in studies" class="form-control"></select>
+					<div data-ng-messages="userForm.$submitted && userForm.title.$error" class="help-block">
+						<div data-ng-message="required">
+							- El <b>tipo de Estudio </b> es requerida.
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Especialidad <sup style="color: red;">*</sup></label>
+					<select name="specialty"  data-ng-model="user.specialty" data-ng-disabled="!user.study" required ng-options="label for label in user.study.specialties" class="form-control">
+						<option value="">- Seleccione -</option>
+					</select>
+					<div data-ng-messages="userForm.$submitted && userForm.specialty.$error" class="text-danger">
+						<div data-ng-message="required">
+							- La <b>especialidad</b> es requerida.
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Nombres <sup style="color: red;">*</sup></label>
+					<input type="text" name="name" ng-model="user.name" required class="form-control" placeholder="Ingrese sus nombres"  >
+					<div data-ng-messages="userForm.$submitted && userForm.name.$error" class="text-danger">
+						<div data-ng-message="required">
+							- Los <b>nombres</b> son requeridos.
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Apellidos <sup style="color: red;">*</sup></label>
+					<input type="text" name="lastName" ng-model="user.lastName" required class="form-control" placeholder="Ingrese sus apellidos" >
+					<div data-ng-messages="userForm.$submitted && userForm.lastName.$error" class="text-danger">
+						<div data-ng-message="required" >
+							- Los <b>apellidos</b> son requerido.
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Cédula de identidad <sup style="color: red;">*</sup></label>
+					<input type="number" name="identityCard" ng-model="user.identityCard" required class="form-control" placeholder="Ingrese su cédula de identidad" >
+					<div data-ng-messages="userForm.$submitted && userForm.identityCard.$error" class="text-danger">
+						<div data-ng-message="required" >
+							- La <b>cédula de identidad</b> es requerida.
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label>Matrícula <sup style="color: red;">*</sup></label>
+					<input type="text" name="registration" ng-model="user.registration" required class="form-control" placeholder="Eje: 052" >
+					<div data-ng-messages="userForm.$submitted && userForm.registration.$error" class="text-danger">
+						<div data-ng-message="required" >
+							- La <b>matrícula</b> es requerida.
+						</div>
+					</div>
+				</div>
+
+				<button type="reset" ng-click="reset()" class="btn btn-danger">Reiniciar</button>
+				<button type="submit" class="btn btn-primary">Imprimir</button>
+
+			</form>
+
+			<br>
+
+			<!--{{ user | json }}-->
+			<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: This superscript <sup style="color: red;">*</sup> mean that, is required.</div>
+
+
+		</div>
+	</div>
+
+	<div class="panel panel-default printable ">
+		<div class="panel-heading">
+			<h3 class="panel-title">Solvencia</h3>
+		</div>
+		<div class="panel-body">
+
+
+			<div class="row">
+				<div class="col-xs-2 col-sm-2">
+					<img ng-src="assets/images/upel.png" class="img-responsive"  >
+				</div>
+				<div class="col-xs-8 col-sm-8">
+					<p class="text-center"><b>REPÚBLICA BOLIVARIANA DE VENEZUELA</b></p>
+					<p class="text-center"><b>UNIVERSIDAD PEDAGÓGICA EXPERIMENTAL LIBERTADOR</b></p>
+					<p class="text-center"><b>INSTITUTO PEDAGOGICO DE MATURIN</b></p>
+					<p class="text-center"><b>SUBDIRECCION DE EXTENSION</b></p>
+					<p class="text-center"><b>BIBLIOTECA “ANDRÉS ELOY BLANCO”</b></p>
+					<p class="text-center"><b>MATURÍN EDO. MONAGAS.</b></p>
+					<p class="text-center"><b>SOLVENCIA</b></p>
+				</div>
+				<div class="col-xs-2 col-sm-2">
+					<img ng-src="assets/images/ipm.png" class="img-responsive" >
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-2">
+				</div>
+				<div class="col-md-8">
+				</div>
+				<div class="col-md-2">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+
+					<p class="text-center"><b><span  ng-bind="user.study.study | uppercase"></span></b></p>
+
+					<br>
+
+					<p>
+						Se certifica que el (la) alumno (a): <b><span ng-bind="user.name | capitalize"></span></b> <span ng-if="!user.name" >__________</span> <b><span ng-bind="user.lastName | capitalize"></span></b> <span ng-if="!user.lastName" >__________</span>,
+						Cédula de Identidad: <b><span ng-bind="user.identityCard"></span></b> <span ng-if="!user.identityCard" >__________</span>,
+						Matrícula: <b><span ng-bind="user.registration"></span></b> <span ng-if="!user.registration" >_____</span>,
+						culminó <span ng-bind="user.study.prefix"></span>: <span ng-if="!user.specialty" >__________</span><b><span ng-bind="user.specialty"></span></b>
+						para la presente fecha se encuentra <b>SOLVENTE</b> con la Unidad de Biblioteca.
+					</p>
+
+					<br>
+
+					<p class="text-center">FIRMA DEL FUNCIONARIO DE BIBLIOTECA</p>
+
+					<br>
+					<br>
+
+					<p class="text-center">SELLO BIBLIOTECA CENTRAL</p>
+
+					<br>
+					<br>
+
+					<p class="text-center">Maturín, <span ng-if="!user.date">__</span> <span ng-bind="user.date | date:'dd'"></span> / <span ng-if="!user.date">__</span> <span ng-bind="user.date | date:'MM'"></span> / 20<span ng-if="!user.date">__</span><span ng-bind="user.date | date:'yy'"></span></p>
+
+					<p>Nota: Va sin enmienda.</p>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</section>
