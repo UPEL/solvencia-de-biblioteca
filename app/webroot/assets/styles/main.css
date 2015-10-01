@@ -52,6 +52,15 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+.has-success input {
+	background: #E3FFE3;
+}
+
+.has-error input {
+	background: #FFF0F4;
+}
+
+
 input.ng-valid {
     color:green;
 }

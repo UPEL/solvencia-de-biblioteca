@@ -20,6 +20,8 @@
     "angular": "1.4.0-rc.2",
     "angular-messages": "1.4.0-rc.2",
     "angular-mocks": "1.4.0-rc.2",
-    "angular-ui-router": "0.2.14"
+    "angular-ui-router": "0.2.14",
+    "angular-bootstrap": "0.13.0",
+    "font-awesome": "4.4.0"
   }
 }

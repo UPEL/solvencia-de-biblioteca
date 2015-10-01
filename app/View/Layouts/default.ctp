@@ -58,6 +58,7 @@ $css = array();
 	<!-- build:css(.) styles/vendor.css -->
 	<!-- bower:css -->
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
 	<!-- endbower -->
 	<!-- endbuild -->
 	<!-- build:css(.tmp) styles/main.css -->
@@ -79,7 +80,7 @@ $css = array();
 
 <div ng-include="'assets/partials/index/nav.html'"></div>
 
-<div id="content" class="container-fluid content">
+<div class="container content">
 	<?php echo $this->fetch('content'); ?>
 </div>
 
@@ -91,6 +92,8 @@ $css = array();
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
 <script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>

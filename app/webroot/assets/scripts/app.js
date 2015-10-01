@@ -1,25 +1,29 @@
 'use strict';
 
-angular.module('routes',['ui.router'])
-    .config(['$urlRouterProvider','$stateProvider',function($urlRouterProvider,$stateProvider){
+angular.module('forms',['ngMessages','ui.bootstrap'])
+    .controller('SolvencyController',['$scope','$log',function($scope,$log) {
 
-        $urlRouterProvider.otherwise('/');
+		$scope.previewSolvency = true;
 
-        $stateProvider
-            .state('home',{
-                url:'/',
-                templateUrl:'assets/partials/contents/solvency.html'
-            })
-			.state('contact',{
-                url:'/contact',
-                templateUrl:'assets/partials/contents/contact.html'
-            });
+		$scope.forms = {
+			solvencyRequest: {},
+			solvencyStatus:{}
+		};
 
-    }]);
-
-
-angular.module('forms',['ngMessages'])
-    .controller('SolvencyController',['$scope',function($scope) {
+		$scope.offices =[
+			{
+				shortName:'Caracas',
+				library:'Felipe Guevara Rojas',
+				state:'Caracas EDO. Distrito Capital.',
+				logo:'/assets/images/ipc.png'
+			},
+			{
+				shortName:'Maturín',
+				library:'ANDRÉS ELOY BLANCO',
+				state:'Maturín EDO. Monagas.',
+				logo:'/assets/images/ipm.png'
+			}
+		];
 
         $scope.studies = [
             {
@@ -78,24 +82,47 @@ angular.module('forms',['ngMessages'])
             }
         ];
 
-        var original = angular.copy($scope.user = {
-            study: $scope.studies[0],
-            specialty:null,
-            name: '',
-            lastName: '',
-            identityCard:null,
-            registration:'',
-            date:new Date()
-        });
+		var original = angular.copy($scope.model = {
+			solvency:{
+				office: $scope.offices[0],
+				study: $scope.studies[0],
+				specialty:null,
+				name: '',
+				lastName: '',
+				identityCard:null,
+				registration:'',
+				date:new Date(),
+				email:''
+			},
+			status:{
+				'identityCard':null
+			}
+		});
 
-        $scope.reset = function(){
-            $scope.user = angular.copy(original);
-            $scope.userForm.$setUntouched();
-            $scope.userForm.$setPristine();
+		$scope.setToFix = function(){
+			//$scope.model = original;
+			$log.log(original);
+
+		};
+
+        $scope.resetSolvencyRequestForm = function(){
+			angular.copy(original.solvency,$scope.model.solvency);
+			$scope.model.solvency.office = $scope.offices[0]; // some bug here, can't reset select to default value with angular.copy
+			$scope.model.solvency.study = $scope.studies[0]; // some bug here, can't reset select to default value with angular.copy
+
+			$scope.forms.solvencyRequest.$setUntouched();
+            $scope.forms.solvencyRequest.$setPristine();
         };
 
-        $scope.print = function(){
-            if($scope.userForm.$valid){
+		$scope.resetStatusRequestForm = function(){
+			angular.copy(original.status,$scope.model.status);
+			$scope.forms.solvencyRequest.$setUntouched();
+			$scope.forms.solvencyStatus.$setPristine();
+		};
+
+		$scope.print = function(){
+			$scope.forms.solvencyRequest.$setSubmitted(true);
+            if($scope.forms.solvencyRequest.$valid){
                 window.print();
             }
         };
@@ -107,4 +134,4 @@ angular.module('forms',['ngMessages'])
         };
     });
 
-angular.module('app',['routes','forms']);
+angular.module('app',['forms']);
