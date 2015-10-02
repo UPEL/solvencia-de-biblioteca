@@ -1,9 +1,12 @@
 <section ng-controller="SolvencyController">
 
 	<div class="panel panel-default non-printable">
+		<div class="panel-heading">
+			<h3 class="panel-title">Solvencia de Biblioteca</h3>
+		</div>
 		<div class="panel-body">
 			<tabset>
-				<tab heading="Solicitar Solvencia de Biblioteca" select="previewSolvency(true)">
+				<tab heading="Solicitar" select="previewSolvency(true)">
 
 					<div style="margin-top: 20px; margin-bottom: 10px;">
 						<div ng-form="forms.solvencyRequest">

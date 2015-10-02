@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loading-bar','validation.match'])
-    .controller('SolvencyController',['$scope','$log',function($scope,$log) {
+angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loading-bar','validation.match','jlareau.pnotify','cgBusy'])
+    .controller('SolvencyController',['$scope','$q','$http','notificationService','$log',function($scope,$q,$http,notificationService,$log) {
 
 		$scope.preview = true;
 
@@ -186,8 +186,12 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 		$scope.signIn = function(){
 			$scope.forms.signIn.$setSubmitted(true);
 			if($scope.forms.signIn.$valid){
+
+				//$http.post('in')
+
 				$log.info('ok fromJson', angular.fromJson($scope.model.signIn));
 				$log.info('ok toJson', angular.toJson($scope.model.signIn));
+
 			}
 		};
 
