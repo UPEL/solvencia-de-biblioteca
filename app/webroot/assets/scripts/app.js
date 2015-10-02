@@ -3,7 +3,12 @@
 angular.module('forms',['ngMessages','ui.bootstrap'])
     .controller('SolvencyController',['$scope','$log',function($scope,$log) {
 
-		$scope.previewSolvency = true;
+		$scope.preview = true;
+
+		$scope.previewSolvency = function(bolean){
+			$scope.preview = bolean;
+		};
+
 
 		$scope.forms = {
 			solvencyRequest: {},

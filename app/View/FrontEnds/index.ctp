@@ -1,11 +1,9 @@
 <section ng-controller="SolvencyController">
 
-	{{previewSolvency}}
-
 	<div class="panel panel-default non-printable">
 		<div class="panel-body">
 			<tabset>
-				<tab heading="Solicitar Solvencia de Biblioteca" select="previewSolvency = true">
+				<tab heading="Solicitar Solvencia de Biblioteca" select="previewSolvency(true)">
 
 					<div style="margin-top: 20px; margin-bottom: 10px;">
 						<div ng-form="forms.solvencyRequest">
@@ -95,7 +93,7 @@
 					<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: Este superíndice <sup style="color: red;">*</sup> significa que el campo requiere ser completado.</div>
 
 				</tab>
-				<tab heading="Estatus de la Solicitud" select="previewSolvency = false">
+				<tab heading="Estatus de la Solicitud" select="previewSolvency(false)">
 					<div style="margin-top: 10px;">
 
 
@@ -128,11 +126,11 @@
 
 <!--	style="background-color: aliceblue;"-->
 
-	<div class="panel panel-default" ng-show="previewSolvency" >
+	<div class="panel panel-default non-printable" ng-show="preview" >
 		<div class="panel-heading">
 			<h3 class="panel-title">Prevista de la solvencia</h3>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body invalid-background">
 
 
 			<div class="row">

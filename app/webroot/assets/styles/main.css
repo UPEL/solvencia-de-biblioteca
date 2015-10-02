@@ -75,6 +75,11 @@ input.ng-invalid {
 	border-radius: 3px;
 }
 
+.invalid-background {
+	background-image: url('/assets/images/invalid.png');
+}
+
+
 @media print
 {
     .non-printable { display: none; }
