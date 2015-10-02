@@ -93,7 +93,7 @@
 					<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: Este superíndice <sup style="color: red;">*</sup> significa que el campo requiere ser completado.</div>
 
 				</tab>
-				<tab heading="Estatus de la Solicitud" select="previewSolvency(false)">
+				<tab heading="Solicitudes" select="previewSolvency(false)">
 					<div style="margin-top: 10px;">
 
 
