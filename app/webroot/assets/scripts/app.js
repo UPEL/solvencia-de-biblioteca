@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('forms',['ngMessages','ui.bootstrap'])
+angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loading-bar','validation.match'])
     .controller('SolvencyController',['$scope','$log',function($scope,$log) {
 
 		$scope.preview = true;
@@ -8,7 +8,6 @@ angular.module('forms',['ngMessages','ui.bootstrap'])
 		$scope.previewSolvency = function(bolean){
 			$scope.preview = bolean;
 		};
-
 
 		$scope.forms = {
 			solvencyRequest: {},
@@ -133,6 +132,74 @@ angular.module('forms',['ngMessages','ui.bootstrap'])
         };
 
     }])
+	.controller('UsersController',['$scope','$log',function($scope,$log){
+
+		var original = angular.copy($scope.model = {
+			signIn:{
+				'email':'',
+				'password':''
+			},
+			register:{
+				'name':'',
+				'lastName':'',
+				'email':'',
+				'password':'',
+				'samePassword':''
+			},
+			recoverAccount:{
+				'email':''
+			}
+		});
+
+		$scope.forms = {
+			signIn: {},
+			register:{},
+			recoverAccount:{}
+		};
+
+		$scope.resetRegisterForm = function(){
+			angular.copy(original.register,$scope.model.register);
+			$scope.forms.register.$setUntouched();
+			$scope.forms.register.$setPristine();
+		};
+
+		$scope.resetSignInForm = function(){
+			angular.copy(original.signIn,$scope.model.signIn);
+			$scope.forms.signIn.$setUntouched();
+			$scope.forms.signIn.$setPristine();
+		};
+
+		var resetRecoverAccountForm = function () {
+			angular.copy(original.recoverAccount,$scope.model.recoverAccount);
+			$scope.forms.recoverAccount.$setUntouched();
+			$scope.forms.recoverAccount.$setPristine();
+		};
+
+		$scope.register = function(){
+			$scope.forms.register.$setSubmitted(true);
+			if($scope.forms.register.$valid){
+				$log.info('ok fromJson', angular.fromJson($scope.model.register));
+				$log.info('ok toJson', angular.toJson($scope.model.register));
+			}
+		};
+
+		$scope.signIn = function(){
+			$scope.forms.signIn.$setSubmitted(true);
+			if($scope.forms.signIn.$valid){
+				$log.info('ok fromJson', angular.fromJson($scope.model.signIn));
+				$log.info('ok toJson', angular.toJson($scope.model.signIn));
+			}
+		};
+
+		$scope.recover = function(){
+			$scope.forms.recoverAccount.$setSubmitted(true);
+			if($scope.forms.recoverAccount.$valid){
+				$log.info('ok fromJson', angular.fromJson($scope.model.recoverAccount));
+				$log.info('ok toJson', angular.toJson($scope.model.recoverAccount));
+			}
+		};
+
+	}])
     .filter('capitalize', function() {
         return function(input) {
             return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';

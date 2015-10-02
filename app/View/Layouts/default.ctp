@@ -59,14 +59,16 @@ $css = array();
 	<!-- bower:css -->
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+	<link rel="stylesheet" href="bower_components/angular-loading-bar/src/loading-bar.css">
+
 	<!-- endbower -->
 	<!-- endbuild -->
 	<!-- build:css(.tmp) styles/main.css -->
 	<link rel="stylesheet" href="assets/styles/main.css">
 	<!-- endbuild -->
 
-	<link rel="shortcut icon" data-href="/favicon.ico" type="image/x-icon">
-	<link rel="icon" data-href="/favicon.ico" type="image/x-icon">
+	<link rel="shortcut icon" data-href="/favicon.png" type="image/x-icon">
+	<link rel="icon" data-href="/favicon.png" type="image/x-icon">
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -96,11 +98,14 @@ $css = array();
 <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
+<script src="bower_components/angular-validation-match/dist/angular-validation-match.js"></script>
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="assets/scripts/moreFilters.js"></script>
 <script src="assets/scripts/app.js"></script>
 <!-- endbuild -->
 
