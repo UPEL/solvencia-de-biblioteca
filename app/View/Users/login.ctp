@@ -65,7 +65,7 @@
 
 							<div class="form-group" ng-class="{'has-success has-feedback': (forms.register.$submitted && forms.register.name.$valid),'has-error has-feedback': (forms.register.$submitted && forms.register.name.$invalid) }">
 								<label class="control-label"> Nombres <sup style="color: red;">*</sup></label>
-								<input type="text" name="name" ng-model="model.register.name" required class="form-control" placeholder="">
+								<input type="text" name="name" ng-model="model.register.name" ng-trim required class="form-control" placeholder="">
 								<span ng-show="forms.register.$submitted" class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok': (forms.register.name.$valid),'glyphicon-remove': ( forms.register.name.$invalid) }" aria-hidden="true"></span>
 								<div data-ng-messages="forms.register.$submitted && forms.register.name.$error" class="help-block">
 									<div data-ng-message="required">
@@ -140,6 +140,10 @@
 						<hr>
 
 						<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: Este superíndice <sup style="color: red;">*</sup> significa que el campo requiere ser completado.</div>
+
+						<hr>
+
+						<pre>{{model.register | json}}</pre>
 
 					</div>
 

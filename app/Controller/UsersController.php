@@ -1,12 +1,13 @@
 <?php class UsersController extends AppController {
 
-	/*
-	 @Description       -> This is CakePHP function. Check docs for more details.
+	/**
+	 * 	 @Description   Here we set array with all public functions names, that client has access, This is CakePHP function. Check docs for more details.
 	 */
-//	public function beforeFilter(){
+	public function beforeFilter(){
 //		$this->{'Auth'}->allow(array('add','check_email','in','recover_account','terms_of_service','privacy_policy','new_password_request','set_new_password','verify_email_address','send_email_again_to_verify_email_address'));
-//		parent::beforeFilter();
-//	}
+		$this->{'Auth'}->allow(array('add'));
+		parent::beforeFilter();
+	}
 
 	/**
 	 * @Description   signIn, register, recoverAccount, view forms.
@@ -369,18 +370,18 @@
 		$this->render('/Elements/ajax_view');
 	}
 
-	/*
-	 @Name              -> add
-	 @Description       -> add new user
-	 @RequestType	    -> AJAX-POST
-	 @Parameters        -> NULL
-	 @Receives       	-> JSON object parsed to array, which has 3 elements:
-		(name) => Name of user account
-		(email) => Email of user account
-		(password) => Password of user account
-	 @Returns           -> Array, which is presented as json string with the json_encode() function in "ajax_view" view, in the ajax layout.
+	/**
+	 * @Description  Is AJAX-POST action, and its role is Add new user
+	 *
+	 * Process JSON object  which has 4 elements:
+	 * (name) => Name of user account
+	 * (lastName) => last name of user account
+	 * (email) => Email of user account
+	 * (password) => Password of user account
+	 *
 	 */
 	public function add(){
+		$this->layout = null;
 		$request = $this->{'request'}->input('json_decode',true);
 		$response = array();
 
@@ -400,7 +401,7 @@
 				Security::setHash('blowfish');
 				$passwordHash = Security::hash($request['password']);
 
-				$publicKey	 	= String::uuid();
+				$publicKey	 	= CakeText::uuid();
 				$privateKeyHash = Security::hash($publicKey);
 
 				$data =	array(

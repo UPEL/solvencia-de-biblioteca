@@ -132,7 +132,7 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
         };
 
     }])
-	.controller('UsersController',['$scope','$log',function($scope,$log){
+	.controller('UsersController',['$scope','notificationService','$http','$filter','$log',function($scope,notificationService,$http,$filter,$log){
 
 		var original = angular.copy($scope.model = {
 			signIn:{
@@ -150,6 +150,11 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 				'email':''
 			}
 		});
+
+		$scope.$watch('model.register.name',function(){
+			$scope.model.register.name = $filter('capitalize')($scope.model.register.name);
+		});
+
 
 		$scope.forms = {
 			signIn: {},
@@ -178,8 +183,24 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 		$scope.register = function(){
 			$scope.forms.register.$setSubmitted(true);
 			if($scope.forms.register.$valid){
-				$log.info('ok fromJson', angular.fromJson($scope.model.register));
-				$log.info('ok toJson', angular.toJson($scope.model.register));
+
+				//$log.info('ok fromJson', angular.fromJson($scope.model.register));
+				//$log.info('ok toJson', angular.toJson($scope.model.register));
+
+				$scope.httpRequestPromise =  $http.post('/new-user', $scope.model.register).
+					then(function(response) {
+
+						$log.info('new-user: ',response);
+
+					}, function(error) {
+
+						$log.info('error: ',error);
+
+					});
+
+
+			}else{
+				notificationService.error('Algo falta');
 			}
 		};
 
@@ -187,19 +208,30 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 			$scope.forms.signIn.$setSubmitted(true);
 			if($scope.forms.signIn.$valid){
 
-				//$http.post('in')
-
 				$log.info('ok fromJson', angular.fromJson($scope.model.signIn));
 				$log.info('ok toJson', angular.toJson($scope.model.signIn));
 
+				//in
+
+
+			}else{
+				notificationService.error('Algo falta');
 			}
 		};
 
 		$scope.recover = function(){
 			$scope.forms.recoverAccount.$setSubmitted(true);
 			if($scope.forms.recoverAccount.$valid){
+
 				$log.info('ok fromJson', angular.fromJson($scope.model.recoverAccount));
 				$log.info('ok toJson', angular.toJson($scope.model.recoverAccount));
+
+				//recover-account
+
+
+
+			}else{
+				notificationService.error('Algo falta');
 			}
 		};
 

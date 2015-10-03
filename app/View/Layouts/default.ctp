@@ -96,22 +96,25 @@ $css = array();
 
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
-<script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-<script type="text/javascript" src="bower_components/angular/angular.js"></script>
-<script type="text/javascript" src="bower_components/angular-recaptcha/release/angular-recaptcha.js"></script>
-<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
-<script type="text/javascript" src="bower_components/angular-busy/dist/angular-busy.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
-<script type="text/javascript" src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-<script type="text/javascript" src="bower_components/angular-messages/angular-messages.js"></script>
-<script type="text/javascript" src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script type="text/javascript" src="bower_components/angular-loading-bar/src/loading-bar.js"></script>
-<script type="text/javascript" src="bower_components/angular-validation-match/dist/angular-validation-match.js"></script
-<script type="text/javascript" src="bower_components/pnotify/pnotify.core.js"></script>
-<script type="text/javascript" src="bower_components/pnotify/pnotify.confirm.js"></script>
-<script type="text/javascript" src="bower_components/pnotify/pnotify.buttons.js"></script>
-<script type="text/javascript" src="bower_components/angular-pnotify/src/angular-pnotify.js"></script>
-<script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-animate/angular-animate.js"></script>
+<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="/bower_components/angular-busy/dist/angular-busy.js"></script>
+<script src="/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+<script src="/bower_components/angular-messages/angular-messages.js"></script>
+<script src="/bower_components/pnotify/pnotify.core.js"></script>
+<script src="/bower_components/pnotify/pnotify.buttons.js"></script>
+<script src="/bower_components/pnotify/pnotify.callbacks.js"></script>
+<script src="/bower_components/pnotify/pnotify.confirm.js"></script>
+<script src="/bower_components/pnotify/pnotify.desktop.js"></script>
+<script src="/bower_components/pnotify/pnotify.history.js"></script>
+<script src="/bower_components/pnotify/pnotify.nonblock.js"></script>
+<script src="/bower_components/angular-pnotify/src/angular-pnotify.js"></script>
+<script src="/bower_components/angular-uuid-service/angular-uuid-service.js"></script>
+<script src="/bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
 <!-- endbower -->
 <!-- endbuild -->
 
