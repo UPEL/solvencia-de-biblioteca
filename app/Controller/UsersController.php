@@ -407,12 +407,12 @@
 				$data =	array(
 					'User'=>Array
 					(
-						'name'					=>	$request['name'],
-						'lastName'	            =>	$request['lastName'],
+						'names'					=>	$request['names'],
+						'lastNames'	            =>	$request['lastNames'],
 						'email'					=>	$request['email'],
-						'email_verified'		=>	1,                      // in production set to 0
+						'emailVerified'		=>	1,                      // in production set to 0
 						'password'				=>	$passwordHash,
-						'temp_password'			=>	$privateKeyHash,
+						'tempPassword'			=>	$privateKeyHash,
 						'banned'				=>	0,
 					)
 				);

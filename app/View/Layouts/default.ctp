@@ -65,6 +65,7 @@ $css = array();
 	<link rel="stylesheet" href="bower_components/pnotify/pnotify.core.css">
 	<link rel="stylesheet" href="bower_components/pnotify/pnotify.buttons.css">
 	<link rel="stylesheet" href="bower_components/angular-busy/dist/angular-busy.min.css">
+	<link rel="stylesheet" href="bower_components/angular-trustpass/dist/tr-trustpass.min.css">
 	<!-- endbower -->
 	<!-- endbuild -->
 	<!-- build:css(.tmp) styles/main.css -->
@@ -114,12 +115,13 @@ $css = array();
 <script src="/bower_components/angular-uuid-service/angular-uuid-service.js"></script>
 <script src="/bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-
+<script src="/bower_components/angular-trustpass/dist/tr-trustpass.min.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
-<script src="assets/scripts/moreFilters.js"></script>
+<script src="assets/scripts/validators.js"></script>
+<script src="assets/scripts/filters.js"></script>
 <script src="assets/scripts/app.js"></script>
 <!-- endbuild -->
 

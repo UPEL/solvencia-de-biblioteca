@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('moreFilters',[])
+angular.module('filters',[])
 /**
- *  All first letters of each word will be capital letters.
+ *  @Description  All first letters of each word will be capital letters.
  *
  *  EXAMPLE: {{ 'hello word' | capitalize }} // Hello Word
  *
@@ -15,7 +15,27 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * Slug or lispCase; All letters are downCased and spaces and specialChars are replaced by hyphens '-'.
+ * @Description All first letters of each word will be capital letters. (NOTE: The filter directive is to directly use in forms inputs)
+ * @source http://stackoverflow.com/a/14425022/2513972
+ */
+	.directive('capitalize', ['$filter',function($filter){
+		return {
+			require: 'ngModel',
+			link: function(scope, element, attrs, modelCtrl) {
+
+				modelCtrl.$parsers.push(function (inputValue) {
+					var transformedInput = $filter('capitalize')(inputValue);
+					if (transformedInput!=inputValue) {
+						modelCtrl.$setViewValue(transformedInput);
+						modelCtrl.$render();
+					}
+					return transformedInput;
+				});
+			}
+		};
+	}])
+/**
+ * @Description Slug or lispCase; All letters are downCased and spaces and specialChars are replaced by hyphens '-'.
  *
  * EXAMPLE: {{ 'Your best days are not behind you; your best days are out in front of you.' | slug }} // your-best-days-are-not-behind-you-your-best-days-are-out-in-front-of-you
  *
@@ -28,7 +48,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * All special chars are replaced by spaces.
+ * @Description  All special chars are replaced by spaces.
  * @param {String}
  * @return {String}
  * */
@@ -38,7 +58,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * Receives one string like: 'hello word' and return 'Hello word'
+ * @Description Receives one string like: 'hello word' and return 'Hello word'
  * @param {String}
  * @return {String}
  */
@@ -48,7 +68,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * Add one more step before apply the 'date' filter of angular. The raw data is first passed through Date.parse(input) before apply the 'date' filter of angular.
+ * @Description Add one more step before apply the 'date' filter of angular. The raw data is first passed through Date.parse(input) before apply the 'date' filter of angular.
  * The idea is get the integer format: Date.parse('2015-01-19 14:12:15') // 142169293500, before apply the 'date' filter of angular.
  *
  *  EXAMPLE:
@@ -67,7 +87,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- *  Replace part of the string.
+ * @Description Replace part of the string.
  *
  *  EXAMPLE:
  *  var partOfTheUrl   = 'search-angular-filters';
@@ -85,7 +105,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * receives one array like: [1,2,3] and return [3,2,1]
+ * @Description receives one array like: [1,2,3] and return [3,2,1]
  * @param  {Array}
  * @return {Array}
  * */
@@ -95,7 +115,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * camelCase filter, receives one string like: 'hello word' and return 'helloWord'
+ * @Description camelCase filter, receives one string like: 'hello word' and return 'helloWord'
  * @param  {String}
  * @return {String}
  * */
@@ -105,7 +125,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * lispCase To CamelCase, receives one string like: 'hello-word' and return 'helloWord'
+ * @Description lispCase To CamelCase, receives one string like: 'hello-word' and return 'helloWord'
  * @param  {String}
  * @return {String}
  */
@@ -115,7 +135,7 @@ angular.module('moreFilters',[])
     };
   }])
 /**
- * AngularJS byte format filter
+ * @Description AngularJS byte format filter
  * Source: https://gist.github.com/thomseddon/3511330
  */
   .filter('bytes', [function() {

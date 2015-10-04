@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loading-bar','validation.match','jlareau.pnotify','cgBusy'])
+angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-bar','validation.match','jlareau.pnotify','cgBusy','validators','trTrustpass'])
     .controller('SolvencyController',['$scope','$q','$http','notificationService','$log',function($scope,$q,$http,notificationService,$log) {
 
 		$scope.preview = true;
@@ -140,8 +140,8 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 				'password':''
 			},
 			register:{
-				'name':'',
-				'lastName':'',
+				'names': '',
+				'lastNames':'',
 				'email':'',
 				'password':'',
 				'samePassword':''
@@ -150,11 +150,6 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 				'email':''
 			}
 		});
-
-		$scope.$watch('model.register.name',function(){
-			$scope.model.register.name = $filter('capitalize')($scope.model.register.name);
-		});
-
 
 		$scope.forms = {
 			signIn: {},
@@ -235,11 +230,6 @@ angular.module('forms',['ngMessages','ui.bootstrap','moreFilters','angular-loadi
 			}
 		};
 
-	}])
-    .filter('capitalize', function() {
-        return function(input) {
-            return (!!input) ? input.replace(/([^\W_]+[^\s-]*) */g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();}) : '';
-        };
-    });
+	}]);
 
 angular.module('app',['forms']);
