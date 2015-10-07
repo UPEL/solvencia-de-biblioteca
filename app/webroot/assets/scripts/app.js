@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-bar','validation.match','jlareau.pnotify','cgBusy','validators','trTrustpass'])
-    .controller('SolvencyController',['$scope','$q','$http','notificationService','$log',function($scope,$q,$http,notificationService,$log) {
+angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-bar','validation.match','jlareau.pnotify','cgBusy','validators','trTrustpass','ngPasswordStrength'])
+    .controller('SolvencyController',['$scope','$q','$window','$http','notificationService','$log',function($scope,$q,$window,$http,notificationService,$log) {
 
 		$scope.preview = true;
 
@@ -127,7 +127,7 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
 		$scope.print = function(){
 			$scope.forms.solvencyRequest.$setSubmitted(true);
             if($scope.forms.solvencyRequest.$valid){
-                window.print();
+                $window.print();
             }
         };
 

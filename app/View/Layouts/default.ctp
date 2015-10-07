@@ -116,6 +116,8 @@ $css = array();
 <script src="/bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
 <script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/bower_components/angular-trustpass/dist/tr-trustpass.min.js"></script>
+<script src="/bower_components/ng-password-strength/dist/scripts/ng-password-strength.js"></script>
+<script src="/bower_components/lodash/lodash.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 

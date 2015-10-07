@@ -119,7 +119,7 @@
 									tr-trustpass="{
 										maximum: true,
 										messageGuide: 'Asegúrese de que su contraseña cumpla estos requisitos:',
-									 	messageDone:'¡Excelente! Su contraseña es segura.',
+									 	messageDone:'¡Excelente! Su contraseña es aceptable.',
 									 	lowercaseLabel:'Un carácter en minúscula.',
 									 	uppercaseLabel:'Un carácter en mayúscula.',
 									 	numberLabel:'Un número.',
@@ -141,6 +141,10 @@
 										- Asegúrese de cumplir con los requisitos mínimos anteriormente descritos.
 									</div>
 								</div>
+
+								<div>Fortaleza de la contraseña: {{passStrength}}%</div>
+								<div ng-password-strength="model.register.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
+
 							</div>
 
 <!--							<pre>{{forms.register.password | json}}</pre>-->
@@ -160,7 +164,8 @@
 									<div data-ng-message="minlength" >
 										- La <b>contraseña</b> debe tener al menos 7 caracteres de largo.
 									</div>
-								</div>
+								</div>								<div>Fortaleza de la contraseña: {{passStrength}}</div>
+
 							</div>
 
 
@@ -174,10 +179,9 @@
 
 						<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: Este superíndice <sup style="color: red;">*</sup> significa que el campo requiere ser completado.</div>
 
-						<hr>
-
-						<pre>{{forms.register | json}}</pre>
-						<pre>{{model.register | json}}</pre>
+<!--						<hr>-->
+<!--						<pre>{{forms.register | json}}</pre>-->
+<!--						<pre>{{model.register | json}}</pre>-->
 
 					</div>
 

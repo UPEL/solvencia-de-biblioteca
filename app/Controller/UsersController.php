@@ -1,16 +1,16 @@
 <?php class UsersController extends AppController {
 
 	/**
-	 * 	 @Description   Here we set array with all public functions names, that client has access, This is CakePHP function. Check docs for more details.
+	 * Here we set array with all public functions names, that client has access, This is CakePHP function. Check docs for more details.
 	 */
 	public function beforeFilter(){
 //		$this->{'Auth'}->allow(array('add','check_email','in','recover_account','terms_of_service','privacy_policy','new_password_request','set_new_password','verify_email_address','send_email_again_to_verify_email_address'));
-		$this->{'Auth'}->allow(array('add'));
+		$this->{'Auth'}->allow(array('in','add'));
 		parent::beforeFilter();
 	}
 
 	/**
-	 * @Description   signIn, register, recoverAccount, view forms.
+	 * signIn, register, recoverAccount, view forms.
 	 */
 	public function login(){
 		if($this->{'Auth'}->login()){
@@ -29,10 +29,6 @@
 		if(!$I18n){
 			$I18n = 'us_EN';
 		}
-
-		// status
-		// message
-		// messageType
 
 		$messages = array(
 			'alreadyVerified'=>array(
@@ -107,7 +103,7 @@
 
 
 	/**
-	 * @Description Example code to use Google reCaptcha
+	 * Example code to use Google reCaptcha
 	 * */
 //	public function addQuestion(){
 //		$this->layout = null;
@@ -162,7 +158,7 @@
 //	}
 
 	/**
-	 * @Description  Login Ajax action. Sign in method.
+	 *  Login Ajax action. Sign in method.
 	 */
 	public function in(){
 		$this->layout = null;
@@ -218,25 +214,21 @@
 			$response['status'] = 'error';
 			$response['message'] 		= $this->responseMessages('userNotExist','es_VE');
 			$response['messageType'] 	= 'userNotExist';
-
 		}
 
-		$this->{'set'}('return',$response);
+		$this->{'set'}('response',$response);
 		$this->render('/Elements/ajax_view');
 	}
 
-	/*
-	 @Name              -> verify_email_address
-	 @Description       -> verify email address of the new user
-	 @RequestType	    -> AJAX-POST
-	 @Parameters        -> NULL
-	 @Receives       	-> JSON object parsed to array, which has 2 elements:
-		(id)		=> Is uuid UserId;
-		(key)		=> Is uuid temp key, is related to temp_password which is hash based on that key, is processed for Security::hash blowfish pipeline, and is used to verify the user account.
-	 @Returns           -> Array, which is presented as json string with the json_encode() function in "ajax_view" view, in the ajax layout.
+	/**
+	 * Is GET action, and its role is: Verify email address of the new user
+	 *
+	 * Process JSON object which has 2 elements:
+	 * 	(id)		=> Is uuid UserId;
+	 *	(key)		=> Is uuid temp key, is related to temp_password which is hash based on that key, is processed for Security::hash blowfish pipeline, and is used to verify the user account.
+	 *
 	 */
-	public function verify_email_address(){
-		$this->layout = null;
+	public function verifyEmailAddress(){
 		$request = $this->{'request'}->params;
 
 		$options = array(
@@ -286,21 +278,35 @@
 			$response['messageType'] 	= 'userNotExist';
 		}
 
-		$this->{'set'}('return',$response);
-		$this->render('/Elements/ajax_view');
+		$this->{'set'}('data',$response);
 	}
 
+	/**
+	 * Send email to verify email address
+	 * @param String [$email] email
+	 * @param String [$userId] userId
+	 * @param String [$publicKey] publicKey
+	 * @return Boolean
+	 **/
+	private function sendEmailToVerifyEmailAddress($email, $userId, $publicKey){
+		$Email = new CakeEmail('default');
+		$Email->template('verifyEmail', 'verifyEmail');
+		$Email->viewVars(array('userId' => $userId,'publicKey'=>$publicKey));
+		$Email->emailFormat('both');
+		$Email->from(array('servicios-estudiantiles-upel@ipm.upel.edu.ve' => 'ipm.upel.edu.ve'));
+		$Email->to($email);
+		$Email->subject('UPEL - Verifique su dirección de correo electrónico');
+		return $Email->send();
+	}
 
-	/*
-	 @Name              -> send_email_again_to_verify_email_address
-	 @Description       -> send email again to verify email address
-	 @RequestType	    -> AJAX-POST
-	 @Parameters        -> NULL
-	 @Receives       	-> JSON object parsed to array, which has 1 elements:
-		(email) => Email of user account
-	 @Returns           -> Array, which is presented as json string with the json_encode() function in "ajax_view" view, in the ajax layout.
+	/**
+	 * Is AJAX-POST action, and its role is: Send email AGAIN to verify email address
+	 *
+	 * Process JSON object which has 1 elements:
+	 * 	(email) => Email of user account
+	 *
 	 */
-	public function send_email_again_to_verify_email_address(){
+	public function sendEmailAgain(){
 		$request = $this->{'request'}->input('json_decode',true);
 		$response = array();
 
@@ -317,7 +323,7 @@
 
 			// checks that the email is not verified
 			if(!$user['User']['email_verified']){
-				$publicKey	 	= String::uuid();
+				$publicKey	 	= CakeText::uuid();
 				$privateKeyHash = Security::hash($publicKey);
 
 				$data =	array(
@@ -331,21 +337,14 @@
 				if($this->{'User'}->save($data)){
 
 					// In production uncomment the following code ==> START
-//					$userData = $this->{'User'}->read();
-//					$Email = new CakeEmail('default');
-//					$Email->template('verifyEmail', 'verifyEmail');
-//					$Email->viewVars(array('userId' => $userData['User']['id'],'publicKey'=>$publicKey));
-//					$Email->emailFormat('both');
-//					$Email->from(array('support@mystock.la' => 'MyStock.LA'));
-//					$Email->to($userData['User']['email']);
-//					$Email->subject('MyStock.LA - Verify your email address');
-//
-//					if ($Email->send()) {
-//						$response['status'] = 'success';
-//					}else{
-//						$response['status'] = 'error';
-//						$response['message'] = 'email-not-send';
-//					}
+					$userData = $this->{'User'}->read();
+
+					if ($this->sendEmailToVerifyEmailAddress($userData['User']['email'], $userData['User']['id'], $publicKey)) {
+						$response['status'] = 'success';
+					}else{
+						$response['status'] = 'error';
+						$response['message'] = 'email-not-send';
+					}
 					// ==> END
 
 					$response['status'] = 'success';
@@ -366,16 +365,16 @@
 			$response['messageType'] 	= 'userNotExist';
 		}
 
-		$this->{'set'}('return',$response);
+		$this->{'set'}('response',$response);
 		$this->render('/Elements/ajax_view');
 	}
 
 	/**
-	 * @Description  Is AJAX-POST action, and its role is Add new user
+	 * Is AJAX-POST action, and its role is Add new user
 	 *
 	 * Process JSON object  which has 4 elements:
-	 * (name) => Name of user account
-	 * (lastName) => last name of user account
+	 * (names) => Name of user account
+	 * (lastNames) => last name of user account
 	 * (email) => Email of user account
 	 * (password) => Password of user account
 	 *
@@ -420,22 +419,15 @@
 				if($this->{'User'}->save($data)){
 
 					// In production uncomment the following code ==> START
-//                    $userData = $this->{'User'}->read();
-//					$Email = new CakeEmail('default');
-//					$Email->template('verifyEmail', 'verifyEmail');
-//					$Email->viewVars(array('userId' => $userData['User']['id'],'publicKey'=>$publicKey));
-//					$Email->emailFormat('both');
-//					$Email->from(array('support@marketplace.com' => 'marketplace.com'));
-//					$Email->to($userData['User']['email']);
-//					$Email->subject('marketplace.com - Verify your email address');
-//
-//					if ($Email->send()) {
-//						$response['status'] = 'success';
-//					}else{
-//                        $response['status']       = 'error';
-//                        $response['message'] 		= $this->responseMessages('emailNotSend','es_VE');
-//                        $response['messageType'] 	= 'emailNotSend';
-//					}
+                    $userData = $this->{'User'}->read();
+
+					if ($this->sendEmailToVerifyEmailAddress($userData['User']['email'], $userData['User']['id'], $publicKey)) {
+						$response['status'] = 'success';
+					}else{
+                        $response['status']       = 'error';
+                        $response['message'] 		= $this->responseMessages('emailNotSend','es_VE');
+                        $response['messageType'] 	= 'emailNotSend';
+					}
 					// ==> END
 
 					$response['status'] = 'success';
@@ -456,22 +448,21 @@
 			$response['messageType'] 	= 'invalidData';
 		}
 
-		$this->{'set'}('return',$response);
+		$this->{'set'}('response',$response);
 		$this->render('/Elements/ajax_view');
 	}
 
 
-	/*
-	 @Name              -> check_email
-	 @Description       -> to seed if email is already in database
-	 @RequestType	    -> AJAX-POST
-	 @Parameters        -> NULL
-	 @Receives       	-> JSON object parsed to array, which has 2 elements:
-		(UserEmail)			=> Email to check in database
-		(inverse_result)	=> If you want received inverse result
-	 @Returns           -> Array, which is presented as json string with the json_encode() function in "ajax_view" view, in the ajax layout.
+	/**
+	 * Is AJAX-POST action, and its role is: seed if email is already in database
+	 *
+	 * Process JSON object which has 2 elements:
+	 *	(UserEmail)			=> Email to check in database
+	 *	(inverse_result)	=> If you want received inverse result
+	 *
 	 */
-	public function check_email(){
+	public function checkEmail(){
+		$this->layout = null;
 		$request = $this->{'request'}->data;
 		$response = false;
 
@@ -498,22 +489,22 @@
 			}
 		}
 
-		$this->{'set'}('return',$response);
+		$this->{'set'}('response',$response);
 		$this->render('/Elements/ajax_view');
 	}
 
-	/*
-	 @Name              -> set_new_password
-	 @Description       -> To set new password
-	 @RequestType	    -> AJAX-POST
-	 @Parameters        -> NULL
-	 @Receives       	-> JSON object parsed to array, which has 3 elements:
-		(id)		=> Is uuid UserId;
-		(key)		=> Is uuid temp key, is related to temp_password which is hash based on that key, is processed for Security::hash blowfish pipeline, and is used to verify the user account.
-		(password)	=> Is the new password
-	 @Returns           -> Array
+
+	/**
+	 *  Is AJAX-POST action, and its role is: Set new password
+	 *
+	 * Process JSON object which has 2 elements:
+	 *	(id)		=> Is uuid UserId;
+	 *	(key)		=> Is uuid temp key, is related to temp_password which is hash based on that key, is processed for Security::hash blowfish pipeline, and is used to verify the user account.
+	 *	(password)	=> Is the new password
+	 *
 	 */
-	public function set_new_password(){
+	public function setNewPassword(){
+		$this->layout = null;
 		$request = $this->{'request'}->input('json_decode',true);
 		$response = array();
 
@@ -546,6 +537,7 @@
 				);
 
 				if($this->{'User'}->save($data)){
+
 					// In production uncomment the following code ==> START
 					// Send email to notify what the password has been changed
 //                    $userData = $this->{'User'}->read();
@@ -583,21 +575,21 @@
 			$response['messageType'] 	= 'userNotExist';
 		}
 
-		$this->{'set'}('return',$response);
+		$this->{'set'}('response',$response);
 		$this->render('/Elements/ajax_view');
 	}
 
-	/*
-	 @Name              -> new_password_request
-	 @Description       -> To accept or not, set new password, if pass the test, the user will be able to see the form.
-	 @RequestType	    -> GET;
-	 @Parameters        -> NULL
-	 @Receives       	-> Array which has 2 elements:
-		(id)	=> Is uuid UserId;
-		(key)	=> Is uuid temp key, is related to temp_password which is hash based on that key, is processed for Security::hash blowfish pipeline, and is used to verify the user account.
-	 @Returns           -> Array
+
+
+	/**
+	 * Is GET action, and its role is: Accept or not, set new password, if pass the test, the user will be able to see the form and set new password.
+	 *
+	 * Process JSON object which has 2 elements:
+	 *	(id)	=> Is uuid UserId;
+	 *	(key)	=> Is uuid temp key, is related to temp_password which is hash based on that key, is processed for Security::hash blowfish pipeline, and is used to verify the user account.
+	 *
 	 */
-	public function  new_password_request(){
+	public function  newPasswordRequest(){
 		$request = $this->{'request'}->params;
 
 		$options = array(
@@ -627,20 +619,18 @@
 			$response['messageType'] 	= 'userNotExist';
 		}
 
-		$this->{'set'}('return',$response);
-		$this->render('/Elements/ajax_view');
+		$this->{'set'}('data',$response);
 	}
 
-	/*
-	 @Name              -> recover_account
-	 @Description       -> for recover account
-	 @RequestType	    -> AJAX-POST;
-	 @Parameters        -> NULL
-	 @Receives       	-> JSON object parsed to array, which has 1 elements:
-		(email) => email user account
-	 @Returns           -> Array, which is presented as json string with the json_encode() function in "ajax_view" view, in the ajax layout.
+	/**
+	 * Is AJAX-POST action, and its role is: Recover user account.
+	 *
+	 * Process JSON object  which has 1 elements:
+	 * (email) => email user account
+	 *
 	 */
-	public function recover_account(){
+	public function recoverAccount(){
+		$this->layout = null;
 		$request = $this->{'request'}->input('json_decode',true);
 		$response  = array();
 
@@ -695,7 +685,6 @@
 
 						$response['status'] = 'success';
 
-
 					}else{
 						$response['status']       = 'error';
 						$response['message'] 		= $this->responseMessages('cannotSetNewParameters','es_VE');
@@ -717,7 +706,7 @@
 			$response['messageType'] 	= 'userNotExist';
 		}
 
-		$this->{'set'}('return',$response);
+		$this->{'set'}('response',$response);
 		$this->render('/Elements/ajax_view');
 	}
 
