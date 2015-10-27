@@ -97,9 +97,6 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
 				registration:'',
 				date:new Date(),
 				email:''
-			},
-			status:{
-				'identityCard':null
 			}
 		});
 

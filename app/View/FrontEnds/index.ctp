@@ -1,12 +1,36 @@
-<section ng-controller="SolvencyController">
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Servicios Estudiantiles</h3>
+			</div>
+			<div class="list-group">
+				<a href="#" class="list-group-item">Solvencia de Biblioteca</a>
+				<a href="#" class="list-group-item">Carnet</a>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Notificaciones</h3>
+			</div>
+			<div class="panel-body">
+				Panel content
+			</div>
+		</div>
+	</div>
+</div>
+
+<section ng-controller="SolvencyController" style="display: none;">
 
 	<div class="panel panel-default non-printable">
 		<div class="panel-heading">
-			<h3 class="panel-title">Solvencia de Biblioteca</h3>
+			<h3 class="panel-title">Servicios Estudiantiles</h3>
 		</div>
 		<div class="panel-body">
-			<tabset>
-				<tab heading="Solicitar" select="previewSolvency(true)">
+			<uib-tabset>
+				<uib-tab heading="Solicitar" select="previewSolvency(true)">
 
 					<div style="margin-top: 20px; margin-bottom: 10px;">
 						<div ng-form="forms.solvencyRequest">
@@ -46,7 +70,7 @@
 
 							<div class="form-group" ng-class="{'has-success has-feedback': (forms.solvencyRequest.$submitted && forms.solvencyRequest.specialty.$valid),'has-error has-feedback': (forms.solvencyRequest.$submitted && forms.solvencyRequest.name.$invalid) }">
 								<label class="control-label" ><i class="fa fa-pencil"></i> Nombres <sup style="color: red;">*</sup></label>
-								<input type="text" name="name" ng-model="model.solvency.name" required class="form-control" placeholder="Ingrese sus nombres"  >
+								<input type="text" name="name" ng-model="model.solvency.name" ng-trim no-special-chars required capitalize class="form-control" placeholder="Ingrese sus nombres"  >
 								<span ng-show="forms.solvencyRequest.$submitted" class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok': (forms.solvencyRequest.name.$valid),'glyphicon-remove': ( forms.solvencyRequest.name.$invalid) }" aria-hidden="true"></span>
 								<div data-ng-messages="forms.solvencyRequest.$submitted && forms.solvencyRequest.name.$error" class="text-danger">
 									<div data-ng-message="required">
@@ -57,7 +81,7 @@
 
 							<div class="form-group" ng-class="{'has-success has-feedback': (forms.solvencyRequest.$submitted && forms.solvencyRequest.lastName.$valid),'has-error has-feedback': (forms.solvencyRequest.$submitted && forms.solvencyRequest.lastName.$invalid) }">
 								<label class="control-label" ><i class="fa fa-pencil"></i> Apellidos <sup style="color: red;">*</sup></label>
-								<input type="text" name="lastName" ng-model="model.solvency.lastName" required class="form-control" placeholder="Ingrese sus apellidos" >
+								<input type="text" name="lastName" ng-model="model.solvency.lastName" ng-trim no-special-chars required capitalize class="form-control" placeholder="Ingrese sus apellidos" >
 								<span ng-show="forms.solvencyRequest.$submitted" class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok': (forms.solvencyRequest.lastName.$valid),'glyphicon-remove': ( forms.solvencyRequest.lastName.$invalid) }" aria-hidden="true"></span>
 								<div data-ng-messages="forms.solvencyRequest.$submitted && forms.solvencyRequest.lastName.$error" class="text-danger">
 									<div data-ng-message="required" >
@@ -95,39 +119,23 @@
 					</div>
 					<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: Este superíndice <sup style="color: red;">*</sup> significa que el campo requiere ser completado.</div>
 
-				</tab>
-				<tab heading="Solicitudes" select="previewSolvency(false)">
+					<pre>
+						{{model | json }}
+					</pre>
+
+
+				</uib-tab>
+				<uib-tab heading="Solicitudes" select="previewSolvency(false)">
 					<div style="margin-top: 10px;">
 
-
-
-						<div style="margin-top: 20px; margin-bottom: 10px;">
-							<div ng-form="forms.solvencyStatus">
-								<div class="form-group" ng-class="{'has-success has-feedback': (forms.solvencyStatus.$submitted && forms.solvencyStatus.identityCard.$valid),'has-error has-feedback': (forms.solvencyStatus.$submitted && forms.solvencyStatus.identityCard.$invalid) }">
-									<label class="control-label"><i class="fa fa-credit-card"></i> Cédula de identidad <sup style="color: red;">*</sup></label>
-									<input type="number" name="identityCard" ng-model="model.status.identityCard" required class="form-control" placeholder="Ingrese su cédula de identidad" >
-									<span ng-show="forms.solvencyRequest.$submitted" class="glyphicon form-control-feedback" ng-class="{'glyphicon-ok': (forms.solvencyRequest.identityCard.$valid),'glyphicon-remove': ( forms.solvencyRequest.identityCard.$invalid) }" aria-hidden="true"></span>
-									<div data-ng-messages="forms.solvencyStatus.$submitted && forms.solvencyStatus.identityCard.$error" class="text-danger">
-										<div data-ng-message="required" >
-											- La <b>cédula de identidad</b> es requerida.
-										</div>
-									</div>
-								</div>
-
-								<button type="button" ng-click="" class="btn btn-danger"><i class="fa fa-refresh"></i> Reiniciar</button>
-								<button type="submit" class="btn btn-primary" ng-click="print()"><i class="fa fa-send"></i> Solicitar estatus</button>
-							</div>
-						</div>
-
+							321321
 
 
 					</div>
-				</tab>
-			</tabset>
+				</uib-tab>
+			</uib-tabset>
 		</div>
 	</div>
-
-<!--	style="background-color: aliceblue;"-->
 
 	<div class="panel panel-default non-printable" ng-show="preview" >
 		<div class="panel-heading">

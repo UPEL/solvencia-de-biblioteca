@@ -52,7 +52,7 @@ $css = array();
 	<meta data-http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
 	<meta data-http-equiv="pragma" content="no-cache" />
 
-	<title>Solvencia de Biblioteca</title>
+	<title>Servicios Estudiantiles</title>
 
 <!--	<script src="https://www.google.com/recaptcha/api.js?onload=vcRecaptchaApiLoaded&render=explicit" async defer></script>-->
 
@@ -85,6 +85,8 @@ $css = array();
 
 <div ng-include="'assets/partials/index/browseHappy.html'"></div>
 
+<?php //debug($userLogged) ?>
+
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
@@ -94,19 +96,17 @@ $css = array();
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/" >UPEL - Solvencia de Biblioteca</a>
+			<a class="navbar-brand" href="/" >UPEL - Servicios Estudiantiles</a>
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<?php if(isset($userLogged)){ ?>
-					<!--				<li><a ng-href="/publish"><span class="glyphicon glyphicon-globe"></span> Publish</a></li>-->
-					<!--				<li class="dropdown">-->
-					<!--					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Account --><?php //if(isset($userLogged)){ echo '( '.$userLogged['User']['name'].' )'; } ?><!-- <span class="caret"></span></a>-->
-					<!--					<ul class="dropdown-menu" role="menu">-->
-					<!--						<li><a ng-href="/publications"><span class="glyphicon glyphicon-bullhorn"></span> publications</a></li>-->
-					<!--						<li><a ng-href="/stock/--><?php //echo $userLogged['User']['id']; ?><!--"><span class="glyphicon glyphicon-th"></span>  Stock</a></li>-->
-					<!--					</ul>-->
-					<!--				</li>-->
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Cuenta <?php if(isset($userLogged)){ echo '( '.$userLogged['User']['names'].' '.$userLogged['User']['lastNames'].' )'; } ?> <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a ng-href="/publications"><span class="glyphicon glyphicon-bullhorn"></span> Perfil</a></li>
+						</ul>
+					</li>
 					<li><a ng-href="/logout"><span class="menu glyphicon glyphicon-off"></span> Salir</a></li>
 				<?php }else{ ?>
 					<li><a ng-href="/login"><span class="menu glyphicon glyphicon-off"></span> Entrar</a></li>
