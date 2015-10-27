@@ -44,17 +44,17 @@ Router::connect('/new-user',								array('controller' => 'users', 	'action' => 
 /**
  * @Description Acción Ajax - Para determinar si el correo ya se ha registrado.
  */
-Router::connect('/check-email',								array('controller' => 'users', 	'action' => 'check_email'));
+Router::connect('/check-email',								array('controller' => 'users', 	'action' => 'checkEmail'));
 
 /**
  * @Description Acción Ajax - Para recuperar una cuenta.
  */
-Router::connect('/recover-account',							array('controller' => 'users', 	'action' => 'recover_account'));
+Router::connect('/recover-account',							array('controller' => 'users', 	'action' => 'recoverAccount'));
 
 /**
  * @Description Acción Get 	- Verify email address, This url is sent as a link to the user's email
  */
-Router::connect('/ve/:id/:key', 							array('controller' => 'users', 	'action' => 'verify_email_address'),
+Router::connect('/ve/:id/:key', 							array('controller' => 'users', 	'action' => 'verifyEmailAddress'),
 	array(
 		'pass' => array('id','key')
 	));
@@ -62,12 +62,12 @@ Router::connect('/ve/:id/:key', 							array('controller' => 'users', 	'action' 
 /**
  * @Description Acción Ajax - send email again to verify email address
  */
-Router::connect('/sea', 									array('controller' => 'users', 	'action' => 'send_email_again_to_verify_email_address'));
+Router::connect('/sea', 									array('controller' => 'users', 	'action' => 'sendEmailAgain'));
 
 /**
  * @Description Acción Get 	- to obtain access to the form to change password, This url is sent as a link to the user's email
  */
-Router::connect('/npr/:id/:key', 							array('controller' => 'users', 	'action' => 'new_password_request'),
+Router::connect('/npr/:id/:key', 							array('controller' => 'users', 	'action' => 'newPasswordRequest'),
 	array(
 		'pass' => array('id','key')
 	));
@@ -75,4 +75,4 @@ Router::connect('/npr/:id/:key', 							array('controller' => 'users', 	'action'
 /**
  * @Description Acción Ajax - set new password
  */
-Router::connect('/snp', 						array('controller' => 'users', 	'action' => 'set_new_password')); //
+Router::connect('/snp', 						array('controller' => 'users', 	'action' => 'setNewPassword')); //

@@ -36,6 +36,8 @@ class AppController extends Controller {
 ////        $this->{'redirect'}('/');
 //    }
 
+	public $inProduction = false;
+
 	public $components = array(
 		'Auth' => array(
 			'authenticate' => array(

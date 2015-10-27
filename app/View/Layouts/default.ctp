@@ -85,7 +85,36 @@ $css = array();
 
 <div ng-include="'assets/partials/index/browseHappy.html'"></div>
 
-<div ng-include="'assets/partials/index/nav.html'"></div>
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/" >UPEL - Solvencia de Biblioteca</a>
+		</div>
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<?php if(isset($userLogged)){ ?>
+					<!--				<li><a ng-href="/publish"><span class="glyphicon glyphicon-globe"></span> Publish</a></li>-->
+					<!--				<li class="dropdown">-->
+					<!--					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Account --><?php //if(isset($userLogged)){ echo '( '.$userLogged['User']['name'].' )'; } ?><!-- <span class="caret"></span></a>-->
+					<!--					<ul class="dropdown-menu" role="menu">-->
+					<!--						<li><a ng-href="/publications"><span class="glyphicon glyphicon-bullhorn"></span> publications</a></li>-->
+					<!--						<li><a ng-href="/stock/--><?php //echo $userLogged['User']['id']; ?><!--"><span class="glyphicon glyphicon-th"></span>  Stock</a></li>-->
+					<!--					</ul>-->
+					<!--				</li>-->
+					<li><a ng-href="/logout"><span class="menu glyphicon glyphicon-off"></span> Salir</a></li>
+				<?php }else{ ?>
+					<li><a ng-href="/login"><span class="menu glyphicon glyphicon-off"></span> Entrar</a></li>
+				<?php } ?>
+			</ul>
+		</div><!--/.nav-collapse -->
+	</div>
+</div>
 
 <div class="container content">
 	<?php echo $this->fetch('content'); ?>

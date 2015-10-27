@@ -4,8 +4,18 @@
 	 * Here we set array with all public functions names, that client has access, This is CakePHP function. Check docs for more details.
 	 */
 	public function beforeFilter(){
-//		$this->{'Auth'}->allow(array('add','check_email','in','recover_account','terms_of_service','privacy_policy','new_password_request','set_new_password','verify_email_address','send_email_again_to_verify_email_address'));
-		$this->{'Auth'}->allow(array('in','add'));
+
+		$this->{'Auth'}->allow(array(
+			'in',
+			'add',
+			'recoverAccount',
+			'verifyEmailAddress',
+			'sendEmailAgain',
+			'setNewPassword',
+			'newPasswordRequest',
+			'recoverAccount',
+			'checkEmail',
+		));
 		parent::beforeFilter();
 	}
 
@@ -99,8 +109,6 @@
 
 		return $messages[$type][$I18n];
 	}
-
-
 
 	/**
 	 * Example code to use Google reCaptcha
@@ -300,6 +308,42 @@
 	}
 
 	/**
+	 * Send email to set new password
+	 * @param String [$email] email
+	 * @param String [$userId] userId
+	 * @param String [$publicKey] publicKey
+	 * @return Boolean
+	 **/
+	private function sendEmailToSetNewPassword($email, $userId, $publicKey){
+		$Email = new CakeEmail('default');
+		$Email->template('passwordHasBeenChanged', 'passwordHasBeenChanged');
+		$Email->viewVars(array('userId' => $userId,'publicKey'=>$publicKey));
+		$Email->emailFormat('both');
+		$Email->from(array('servicios-estudiantiles-upel@ipm.upel.edu.ve' => 'ipm.upel.edu.ve'));
+		$Email->to($email);
+		$Email->subject('UPEL - Su clave ha sido cambiada');
+		return $Email->send();
+	}
+
+	/**
+	 * Send email to set new password
+	 * @param String [$email] email
+	 * @param String [$userId] userId
+	 * @param String [$publicKey] publicKey
+	 * @return Boolean
+	 **/
+	private function sendEmailToRecoverUserAccount($email, $userId, $publicKey){
+		$Email = new CakeEmail('default');
+		$Email->template('newPasswordRequest', 'newPasswordRequest');
+		$Email->viewVars(array('userId' => $userId,'publicKey'=>$publicKey));
+		$Email->emailFormat('both');
+		$Email->from(array('servicios-estudiantiles-upel@ipm.upel.edu.ve' => 'ipm.upel.edu.ve'));
+		$Email->to($email);
+		$Email->subject('UPEL - Establecer una nueva clave');
+		return $Email->send();
+	}
+
+	/**
 	 * Is AJAX-POST action, and its role is: Send email AGAIN to verify email address
 	 *
 	 * Process JSON object which has 1 elements:
@@ -336,18 +380,18 @@
 
 				if($this->{'User'}->save($data)){
 
-					// In production uncomment the following code ==> START
-					$userData = $this->{'User'}->read();
+					if($this->inProduction){
+						$userData = $this->{'User'}->read();
 
-					if ($this->sendEmailToVerifyEmailAddress($userData['User']['email'], $userData['User']['id'], $publicKey)) {
-						$response['status'] = 'success';
+						if ($this->sendEmailToVerifyEmailAddress($userData['User']['email'], $userData['User']['id'], $publicKey)) {
+							$response['status'] = 'success';
+						}else{
+							$response['status'] = 'error';
+							$response['message'] = 'email-not-send';
+						}
 					}else{
-						$response['status'] = 'error';
-						$response['message'] = 'email-not-send';
+						$response['status'] = 'success';
 					}
-					// ==> END
-
-					$response['status'] = 'success';
 
 				}else{
 					$response['status']       = 'error';
@@ -418,19 +462,19 @@
 
 				if($this->{'User'}->save($data)){
 
-					// In production uncomment the following code ==> START
-                    $userData = $this->{'User'}->read();
+					if($this->inProduction){
+						$userData = $this->{'User'}->read();
 
-					if ($this->sendEmailToVerifyEmailAddress($userData['User']['email'], $userData['User']['id'], $publicKey)) {
-						$response['status'] = 'success';
+						if ($this->sendEmailToVerifyEmailAddress($userData['User']['email'], $userData['User']['id'], $publicKey)) {
+							$response['status'] = 'success';
+						}else{
+							$response['status']       = 'error';
+							$response['message'] 		= $this->responseMessages('emailNotSend','es_VE');
+							$response['messageType'] 	= 'emailNotSend';
+						}
 					}else{
-                        $response['status']       = 'error';
-                        $response['message'] 		= $this->responseMessages('emailNotSend','es_VE');
-                        $response['messageType'] 	= 'emailNotSend';
+						$response['status'] = 'success';
 					}
-					// ==> END
-
-					$response['status'] = 'success';
 
 				}else{
 					$response['status']       = 'error';
@@ -524,7 +568,7 @@
 				Security::setHash('blowfish');
 				$passwordHash = Security::hash($request['password']);
 
-				$publicKey	 	= String::uuid();
+				$publicKey	 	= CakeText::uuid();
 				$privateKeyHash = Security::hash($publicKey);
 
 				$data =	array(
@@ -538,26 +582,18 @@
 
 				if($this->{'User'}->save($data)){
 
-					// In production uncomment the following code ==> START
-					// Send email to notify what the password has been changed
-//                    $userData = $this->{'User'}->read();
-//					$Email = new CakeEmail('default');
-//					$Email->template('passwordHasBeenChanged', 'passwordHasBeenChanged');
-////					$Email->viewVars(array('userId' => $userData['User']['id'],'publicKey'=>$publicKey));
-//					$Email->emailFormat('both');
-//					$Email->from(array('support@mystock.la' => 'MyStock.LA'));
-//					$Email->to($userData['User']['email']);
-//					$Email->subject('MyStock.LA - You password has been changed');
-////
-//					if ($Email->send()) {
-//						$response['status'] = 'success';
-//					}else{
-//						$response['status'] = 'error';
-//						$response['message'] = 'email-not-send';
-//					}
-					// ==> END
+					if($this->inProduction){
+						$userData = $this->{'User'}->read();
 
-					$response['status'] = 'success';
+						if ($this->sendEmailToSetNewPassword($userData['User']['email'], $userData['User']['id'], $publicKey)) {
+							$response['status'] = 'success';
+						}else{
+							$response['status'] = 'error';
+							$response['message'] = 'email-not-send';
+						}
+					}else{
+						$response['status'] = 'success';
+					}
 
 				}else{
 					$response['status']       = 'error';
@@ -651,7 +687,7 @@
 				if(!$user['User']['suspended']){
 					Security::setHash('blowfish');
 
-					$publicKey	 = String::uuid();
+					$publicKey	 = CakeText::uuid();
 					$privateKey  = Security::hash($publicKey);
 
 					$data =	array(
@@ -665,25 +701,18 @@
 
 					if($this->{'User'}->save($data)){
 
-						// In production uncomment the following code ==> START
-//                        $Email = new CakeEmail('default');
-//						$Email->template('newPasswordRequest', 'newPasswordRequest');
-//						$Email->viewVars(array('userId' => $user['User']['id'],'publicKey'=>$publicKey));
-//						$Email->emailFormat('both');
-//						$Email->from(array('support@marketplace.com' => 'MarketPlace.com'));
-//						$Email->to($user['User']['email']);
-//						$Email->subject('MarketPlace.com - Set new password');
-//
-//						if ($Email->send()) {
-//							$response['status'] = 'success';
-//						}else{
-//                            $response['status']       = 'error';
-//                            $response['message'] 		= $this->responseMessages('emailNotSend','es_VE');
-//                            $response['messageType'] 	= 'emailNotSend';
-//						}
-						// ==> END
+						if($this->inProduction){
+							$userData = $this->{'User'}->read();
 
-						$response['status'] = 'success';
+							if ($this->sendEmailToRecoverUserAccount($userData['User']['email'], $userData['User']['id'], $publicKey)) {
+								$response['status'] = 'success';
+							}else{
+								$response['status'] = 'error';
+								$response['message'] = 'email-not-send';
+							}
+						}else{
+							$response['status'] = 'success';
+						}
 
 					}else{
 						$response['status']       = 'error';

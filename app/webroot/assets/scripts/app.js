@@ -132,7 +132,7 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
         };
 
     }])
-	.controller('UsersController',['$scope','notificationService','$http','$filter','$log',function($scope,notificationService,$http,$filter,$log){
+	.controller('UsersController',['$scope','$window','notificationService','$http','$filter','$log',function($scope,$window,notificationService,$http,$filter,$log){
 
 		var original = angular.copy($scope.model = {
 			signIn:{
@@ -179,23 +179,20 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
 			$scope.forms.register.$setSubmitted(true);
 			if($scope.forms.register.$valid){
 
-				//$log.info('ok fromJson', angular.fromJson($scope.model.register));
-				//$log.info('ok toJson', angular.toJson($scope.model.register));
-
 				$scope.httpRequestPromise =  $http.post('/new-user', $scope.model.register).
 					then(function(response) {
-
-						$log.info('new-user: ',response);
-
+						if(response.data.status === 'success'){
+							notificationService.success('Listo, ahora solo falta validar su email, revise su correo.');
+							$scope.resetRegisterForm();
+						}else{
+							notificationService.error(response.data.message);
+						}
 					}, function(error) {
-
-						$log.info('error: ',error);
-
+						$log.error('Error at app.js: $scope.register() ',error);
 					});
 
-
 			}else{
-				notificationService.error('Algo falta');
+				notificationService.error('¡Algo falta!');
 			}
 		};
 
@@ -203,14 +200,20 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
 			$scope.forms.signIn.$setSubmitted(true);
 			if($scope.forms.signIn.$valid){
 
-				$log.info('ok fromJson', angular.fromJson($scope.model.signIn));
-				$log.info('ok toJson', angular.toJson($scope.model.signIn));
-
-				//in
-
+				$scope.httpRequestPromise =  $http.post('/in', $scope.model.signIn).
+					then(function(response) {
+						if(response.data.status === 'success'){
+							$scope.resetSignInForm();
+							$window.location = '/';
+						}else{
+							notificationService.error(response.data.message);
+						}
+					}, function(error) {
+						$log.error('Error at app.js: $scope.signIn() ',error);
+					});
 
 			}else{
-				notificationService.error('Algo falta');
+				notificationService.error('¡Algo falta!');
 			}
 		};
 
@@ -218,12 +221,18 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
 			$scope.forms.recoverAccount.$setSubmitted(true);
 			if($scope.forms.recoverAccount.$valid){
 
-				$log.info('ok fromJson', angular.fromJson($scope.model.recoverAccount));
-				$log.info('ok toJson', angular.toJson($scope.model.recoverAccount));
-
-				//recover-account
-
-
+				$scope.httpRequestPromise =  $http.post('/recover-account', $scope.model.recoverAccount).
+					then(function(response) {
+						if(response.data.status === 'success'){
+							notificationService.success('Listo, ahora revise su correo.');
+							resetRecoverAccountForm();
+						}else{
+							$log.info('response.data: ',response.data);
+							notificationService.error(response.data.message);
+						}
+					}, function(error) {
+						$log.error('Error at app.js: $scope.signIn() ',error);
+					});
 
 			}else{
 				notificationService.error('Algo falta');
