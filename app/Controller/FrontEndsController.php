@@ -7,7 +7,7 @@
 //        parent::beforeFilter();
 //    }
 
-    public function index(){
+    public function landingPage(){
 
 //        $this->layout = 'landingPage';
     }

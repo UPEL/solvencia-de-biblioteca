@@ -1,32 +1,8 @@
-<div class="row">
-	<div class="col-md-4">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Servicios Estudiantiles</h3>
-			</div>
-			<div class="list-group">
-				<a href="#" class="list-group-item">Solvencia de Biblioteca</a>
-				<a href="#" class="list-group-item">Carnet</a>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-8">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">Notificaciones</h3>
-			</div>
-			<div class="panel-body">
-				Panel content
-			</div>
-		</div>
-	</div>
-</div>
-
-<section ng-controller="SolvencyController" style="display: none;">
+<section ng-controller="SolvencyController">
 
 	<div class="panel panel-default non-printable">
 		<div class="panel-heading">
-			<h3 class="panel-title">Servicios Estudiantiles</h3>
+			<h3 class="panel-title">Solvencia de Biblioteca</h3>
 		</div>
 		<div class="panel-body">
 			<uib-tabset>
@@ -119,16 +95,16 @@
 					</div>
 					<div class="alert alert-info alert-xs" style="margin-bottom: 0;" role="alert">NOTA: Este superíndice <sup style="color: red;">*</sup> significa que el campo requiere ser completado.</div>
 
-					<pre>
-						{{model | json }}
-					</pre>
+<!--					<pre>-->
+<!--						{{model | json }}-->
+<!--					</pre>-->
 
 
 				</uib-tab>
 				<uib-tab heading="Solicitudes" select="previewSolvency(false)">
 					<div style="margin-top: 10px;">
 
-							321321
+						321321
 
 
 					</div>
@@ -210,3 +186,4 @@
 	</div>
 
 </section>
+

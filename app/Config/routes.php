@@ -12,7 +12,7 @@
 /**
  * @Description Acción Get - Interfaz principal.
  */
-Router::connect('/',		array('controller' => 'frontEnds', 		'action' => 'index'));
+Router::connect('/',		array('controller' => 'frontEnds', 		'action' => 'landingPage'));
 
 // U
 
@@ -76,3 +76,8 @@ Router::connect('/npr/:id/:key', 							array('controller' => 'users', 	'action'
  * @Description Acción Ajax - set new password
  */
 Router::connect('/snp', 						array('controller' => 'users', 	'action' => 'setNewPassword')); //
+
+
+Router::connect('/solvencia-de-biblioteca', 	array('controller' => 'services', 	'action' => 'librarySolvency'));
+
+Router::connect('/perfil', 	array('controller' => 'users', 	'action' => 'profile'));

@@ -104,7 +104,7 @@ $css = array();
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> Cuenta <?php if(isset($userLogged)){ echo '( '.$userLogged['User']['names'].' '.$userLogged['User']['lastNames'].' )'; } ?> <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a ng-href="/publications"><span class="glyphicon glyphicon-bullhorn"></span> Perfil</a></li>
+							<li><a ng-href="/perfil"><span class="glyphicon glyphicon-bullhorn"></span> Perfil</a></li>
 						</ul>
 					</li>
 					<li><a ng-href="/logout"><span class="menu glyphicon glyphicon-off"></span> Salir</a></li>

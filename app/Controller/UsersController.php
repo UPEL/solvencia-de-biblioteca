@@ -740,4 +740,8 @@
 	}
 
 
+	public function profile(){
+
+	}
+
 }
