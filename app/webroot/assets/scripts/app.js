@@ -10,9 +10,124 @@ angular.module('forms',['ngMessages','ui.bootstrap','filters','angular-loading-b
 		};
 
 		$scope.forms = {
-			solvencyRequest: {},
-			solvencyStatus:{}
+			solvencyRequest: {}
 		};
+
+		$scope.offices2 =[
+			{
+				officeName:'Instituto pedagógico de Caracas',
+				libraryName:'Felipe Guevara Rojas',
+				state:'Caracas EDO. Distrito Capital.',
+				logo:'/assets/images/ipc.png',
+				studies:{
+
+				}
+			},
+			{
+				officeName:'Instituto pedagógico de Barquisimeto Luis Beltrán Prieto Figueroa',
+				libraryName:'',
+				state:'',
+				logo:'',
+				careers:{}
+			},
+			{
+				officeName:'Instituto pedagógico de Gervasio Rubio',
+				libraryName:'',
+				state:'',
+				logo:'',
+				careers:{}
+			},
+			{
+				officeName:'Instituto pedagógico de Maturín',
+				libraryName:'ANDRÉS ELOY BLANCO',
+				state:'Maturín EDO. Monagas.',
+				logo:'/assets/images/ipm.png',
+				studies:[
+					{
+						'studyType':'Pregrado',
+						'prefix':'la especialidad de',
+						'specialties':[
+							'Biología',
+							'Física',
+							'Química',
+							'Matemática',
+							'Ciencias de la Tierra',
+							'Geografía e Historia',
+							'Educación Física',
+							'Educación Integral',
+							'Educación Comercial',
+							'Educación Especial',
+							'Educación Preescolar',
+							'Informática',
+							'Ingles',
+							'Lengua y Literatura'
+						]
+					},
+					{
+						'studyType':'Maestría',
+						'prefix':'la',
+						'specialties':[
+							'MAESTRÍA EN EDUCACIÓN MENCIÓN EDUCACIÓN SUPERIOR',
+							'MAESTRÍA EN EDUCACIÓN MENCIÓN GERENCIA EDUCACIONAL',
+							'MAESTRÍA EN EDUCACIÓN MENCIÓN ENSEÑANZA DE LA MATEMÁTICA',
+							'MAESTRÍA EN EDUCACIÓN MENCIÓN ENSEÑANZA DE LA GEOHISTORIA',
+							'MAESTRÍA EN EDUCACIÓN MENCIÓN ENSEÑANZA DE LA EDUCACIÓN FÍSICA',
+							'MAESTRÍA EN LINGÜÍSTICA',
+							'MAESTRÍA EN LITERATURA LATINOAMERICANA',
+							'MAESTRÍA EN ENSEÑANZA DEL INGLÉS COMO LENGUA EXTRANJERA',
+							'MAESTRÍA EN EDUCACIÓN AMBIENTAL'
+						]
+					},
+					{
+						'studyType':'Especializaciones',
+						'prefix':'la',
+						'specialties':[
+							'ESPECIALIZACIÓN EN EDUCACIÓN BÁSICA',
+							'ESPECIALIZACIÓN EN PROCESOS DIDÁCTICOS PARA EL NIVEL EDUCATIVO BÁSICO',
+							'ESPECIALIZACIÓN EN DOCENCIA UNIVERSITARIA',
+							'ESPECIALIZACIÓN EN EDUCACIÓN PARA LA GESTIÓN COMUNITARIA',
+							'ESPECIALIZACIÓN EN EDUCACIÓN PARA LA INTEGRACIÓN DE PERSONAS CON DISCAPACIDADES',
+							'ESPECIALIZACIÓN EN EDUCACIÓN INICIAL'
+						]
+					},
+					{
+						'studyType':'Doctorado',
+						'prefix':'el',
+						'specialties':[
+							'DOCTORADO EN EDUCACIÓN'
+						]
+					}
+				]
+			},
+			{
+				officeName:'Instituto pedagógico de Maracay Rafael Alberto Escobar Lara',
+				libraryName:'',
+				state:'',
+				logo:'',
+				studies:{}
+			},
+			{
+				officeName:'Instituto pedagogico Jose Manuel Siso Martínez',
+				libraryName:'',
+				state:'',
+				logo:'',
+				studies:{}
+			},
+			{
+				officeName:'Instituto de Mejoramiento Profesional Del Magisterio',
+				libraryName:'',
+				state:'',
+				logo:'',
+				studies:{}
+			},
+			{
+				officeName:'Instituto Pedagógico Rural “El Macaro”',
+				libraryName:'',
+				state:'',
+				logo:'',
+				studies:{}
+			}
+		];
 
 		$scope.offices =[
 			{
